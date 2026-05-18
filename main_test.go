@@ -228,7 +228,7 @@ func TestMatchDomain_EmptyDomain(t *testing.T) {
 func TestMatchDomain_CachesResult(t *testing.T) {
 	setupMatchDomainRules()
 	_ = matchDomain("google.com.")
-	_, found := ruleCache.Get("google.com")
+	_, found := ruleCache.Get("google.com.")
 	if !found {
 		t.Error("expected result to be cached after match")
 	}

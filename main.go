@@ -231,13 +231,13 @@ func flattenResponse(r *dns.Msg, originalName string) {
 	r.Answer = filtered
 }
 
-func matchDomain(domain string) *DomainRule {
-	if cache, exist := ruleCache.Get(domain); exist {
+func matchDomain(qName string) *DomainRule {
+	if cache, exist := ruleCache.Get(qName); exist {
 		return cache
 	}
-
-	if len(domain) > 0 && domain[len(domain)-1] == '.' {
-		domain = domain[:len(domain)-1]
+	domain := ""
+	if len(qName) > 0 && qName[len(qName)-1] == '.' {
+		domain = qName[:len(qName)-1]
 	}
 	if domain == "" {
 		return nil
@@ -272,7 +272,7 @@ func matchDomain(domain string) *DomainRule {
 		}
 	}
 
-	ruleCache.Add(domain, matched)
+	ruleCache.Add(qName, matched)
 	return matched
 }
 
