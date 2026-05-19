@@ -1,11 +1,11 @@
-# dns-filter
+# dns-prefer
 
 A DNS proxy that enforces IP version preference per domain. When a domain matches a rule, it checks whether the preferred record type exists — if so, queries for the other type are blocked.
 
 ## Usage
 
 ```shell
-dns-filter [options]
+dns-prefer [options]
 
 Options:
   -s string   upstream DNS server (default "1.1.1.1:53")
@@ -54,7 +54,7 @@ CIDR rules only take effect when no domain rule matches the queried domain. They
 
 ```shell
 # Start the proxy
-dns-filter -s 1.1.1.1:53 -l 0.0.0.0:5367 -c /etc/dns-prefer.conf
+dns-prefer -s 1.1.1.1:53 -l 0.0.0.0:5367 -c /etc/dns-prefer.conf
 
 # Query through the proxy
 nslookup -port=5367 www.google.com 127.0.0.1
