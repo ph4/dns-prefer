@@ -59,3 +59,8 @@ dns-prefer -s 1.1.1.1:53 -l 0.0.0.0:5367 -c /etc/dns-prefer.conf
 # Query through the proxy
 nslookup -port=5367 www.google.com 127.0.0.1
 ```
+
+
+## Community & Support
+
+Thanks to the [linux.do](https://linux.do/) community for their platform support in promoting this project.
