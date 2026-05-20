@@ -1,4 +1,4 @@
-module dns-filter
+module dns-prefer
 
 go 1.23.0
 
