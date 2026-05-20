@@ -69,6 +69,9 @@ func main() {
 }
 
 func dnsRequestHandle(writer dns.ResponseWriter, req *dns.Msg) {
+	if len(req.Question) == 0 {
+		return
+	}
 	qName := req.Question[0].Name
 	qType := req.Question[0].Qtype
 
@@ -248,7 +251,9 @@ func matchDomain(qName string) *DomainRule {
 		switch rule.MatchType {
 		case SUFFIX:
 			suffix := rule.Rule
-			if suffix[0] != '.' {
+			if strings.HasPrefix(suffix, "*.") {
+				suffix = suffix[1:]
+			} else if suffix[0] != '.' {
 				if rule.Rule == domain {
 					matched = rule
 					break

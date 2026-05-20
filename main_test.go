@@ -189,6 +189,31 @@ func TestMatchDomain_SuffixMatch(t *testing.T) {
 	}
 }
 
+func TestMatchDomain_WildcardSuffixMatch(t *testing.T) {
+	resetGlobals()
+	domainRules = []*DomainRule{
+		{Rule: "*.google.com", MatchType: SUFFIX, Protocol: dns.TypeA},
+	}
+
+	cases := []struct {
+		domain  string
+		wantNil bool
+	}{
+		{"www.google.com.", false},
+		{"sub.google.com.", false},
+		{"google.com.", true}, // apex excluded
+	}
+	for _, c := range cases {
+		rule := matchDomain(c.domain)
+		if c.wantNil && rule != nil {
+			t.Errorf("matchDomain(%q) expected nil, got %v", c.domain, rule)
+		}
+		if !c.wantNil && rule == nil {
+			t.Errorf("matchDomain(%q) expected match, got nil", c.domain)
+		}
+	}
+}
+
 func TestMatchDomain_StrictMatch(t *testing.T) {
 	setupMatchDomainRules()
 

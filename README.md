@@ -24,6 +24,7 @@ Each rule ends with `@4` (prefer IPv4, block AAAA if A exists) or `@6` (prefer I
 | Format | Type | Description |
 |--------|------|-------------|
 | `example.com@4` | suffix | Matches `example.com` and all subdomains |
+| `*.example.com@4` | suffix | Matches subdomains only, excludes `example.com` itself |
 | `strict:example.com@4` | strict | Exact domain match only |
 | `regex:.*\.example\.com@4` | regex | Match by regular expression |
 | `cidr:192.168.1.0/24@6` | cidr | Block query if resolved IP falls in CIDR range |
@@ -31,8 +32,11 @@ Each rule ends with `@4` (prefer IPv4, block AAAA if A exists) or `@6` (prefer I
 ### Example config
 
 ```
-# Prefer IPv4 for Google domains
+# Prefer IPv4 for Google domains (including google.com itself)
 google.com@4
+
+# Prefer IPv4 for subdomains only, google.com itself is unaffected
+*.google.com@4
 
 # Prefer IPv6 for this exact domain only
 strict:www.youtube.com@6
@@ -59,7 +63,6 @@ dns-prefer -s 1.1.1.1:53 -l 0.0.0.0:5367 -c /etc/dns-prefer.conf
 # Query through the proxy
 nslookup -port=5367 www.google.com 127.0.0.1
 ```
-
 
 ## Community & Support
 
