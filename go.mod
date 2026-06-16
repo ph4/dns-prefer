@@ -1,4 +1,4 @@
-module dns-prefer
+module github.com/ph4/dns-prefer
 
 go 1.23.0
 
